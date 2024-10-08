@@ -8,6 +8,7 @@ import uvicorn
 import re
 import os
 import multiprocessing
+import util
 
 app = FastAPI()
 yt_id_regex = re.compile(r"^[a-zA-Z0-9_-]{11}$")
@@ -22,6 +23,7 @@ class Media(BaseModel):
 		"noplaylist": True,
 		"wait_for_video": False,
 		"encoding": "utf-8",
+		"extractor_args": {"youtube": {"lang": "en", "skip": ["translated_subs"]}},
 	}
 
 
@@ -39,11 +41,16 @@ def get(media: Media):
 			raise HTTPException(status_code=404, detail=str(err))
 		data = {
 			"title": info["title"],
-			"url": info.get("webpage_url", url),
+			"webpage_url": info.get("webpage_url", url),
 			"sound_url": info["url"],
 			"duration": info["duration"],
 			"start": info.get("start_time", 0),
 			"end": info.get("end_time", info["duration"]),
+			"upload_date": util.format_date(info.get("upload_date", None)),
+			"channel": util.try_find_channel(info),
+			"artist": util.try_find_artist(info),
+			"album": info.get("album", None),
+			"track": info.get("track", None),
 		}
 		return data
 

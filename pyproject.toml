@@ -4,7 +4,10 @@ version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.12"
 license = "MPL-2.0"
-dependencies = ["fastapi[standard]>=0.115.0", "yt-dlp[curl-cffi,default]>=2024.9.25.232842.dev0"]
+dependencies = [
+    "fastapi[standard]>=0.115.0",
+    "yt-dlp[curl-cffi,default]>=2024.9.25.232842.dev0",
+]
 
 [tool.ruff]
 line-length = 100
