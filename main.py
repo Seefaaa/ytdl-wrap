@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 import uvicorn
 import re
 import os
+import sys
 import multiprocessing
 import util
 
@@ -58,6 +59,6 @@ def get(media: Media):
 if __name__ == "__main__":
 	load_dotenv()
 	host = os.getenv("host", "0.0.0.0")
-	port = int(os.getenv("port", 8000))
+	port = int(sys.argv[1] || os.getenv("port", 8000))
 	multiprocessing.freeze_support()
 	uvicorn.run(app, host=host, port=port, reload=False, workers=1)
