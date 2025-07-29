@@ -59,6 +59,6 @@ def get(media: Media):
 if __name__ == "__main__":
 	load_dotenv()
 	host = os.getenv("host", "0.0.0.0")
-	port = int(sys.argv[1] || os.getenv("port", 8000))
+	port = int(sys.argv[1] or os.getenv("port", 8000))
 	multiprocessing.freeze_support()
 	uvicorn.run(app, host=host, port=port, reload=False, workers=1)
